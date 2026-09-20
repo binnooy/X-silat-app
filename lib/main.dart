@@ -18,10 +18,7 @@ class PencakSilatApp extends StatelessWidget {
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
       ),
-      home: const ScoringScreen(
-        redFighter: 'RED',
-        blueFighter: 'BLUE',
-      ),
+      home: const ScoringScreen(),
     );
   }
 }
