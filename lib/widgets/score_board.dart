@@ -1,37 +1,45 @@
 import 'package:flutter/material.dart';
 
 import '../controllers/score_controller.dart';
+import '../controllers/penalty_controller.dart';
+import '../controllers/match_controller.dart';
 
 class ScoreBoard extends StatelessWidget {
   final ScoreController scoreController;
+  final PenaltyController penaltyController;
+  final MatchController matchController;
 
   const ScoreBoard({
     super.key,
     required this.scoreController,
+    required this.penaltyController,
+    required this.matchController,
   });
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: scoreController,
+      animation: Listenable.merge([
+        scoreController,
+        penaltyController,
+      ]),
       builder: (context, child) {
+        final redNet = matchController.finalRedScore;
+        final blueNet = matchController.finalBlueScore;
+
         return Container(
           height: 190,
           decoration: BoxDecoration(
             color: Colors.black,
-            border: Border.all(
-              color: Colors.white,
-              width: 1.5,
-            ),
+            border: Border.all(color: Colors.white, width: 1.5),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
             children: [
-              // RED SCORE
               Expanded(
                 child: Center(
                   child: Text(
-                    scoreController.redScore.toString().padLeft(2, '0'),
+                    redNet.toString().padLeft(2, '0'),
                     style: const TextStyle(
                       color: Colors.red,
                       fontSize: 90,
@@ -40,19 +48,11 @@ class ScoreBoard extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // CENTER LINE
-              Container(
-                width: 2,
-                height: double.infinity,
-                color: Colors.white,
-              ),
-
-              // BLUE SCORE
+              Container(width: 2, height: double.infinity, color: Colors.white),
               Expanded(
                 child: Center(
                   child: Text(
-                    scoreController.blueScore.toString().padLeft(2, '0'),
+                    blueNet.toString().padLeft(2, '0'),
                     style: const TextStyle(
                       color: Colors.blue,
                       fontSize: 90,

@@ -495,6 +495,8 @@ class _ScoringScreenState extends State<ScoringScreen> {
 
               ScoreBoard(
                 scoreController: scoreController,
+                penaltyController: penaltyController,
+                matchController: matchController,
               ),
 
               const SizedBox(height: 20),

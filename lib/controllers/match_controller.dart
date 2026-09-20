@@ -61,7 +61,9 @@ class MatchController extends ChangeNotifier {
   // ============================================================
 
   int get finalRedScore {
-    return redTotalScore + scoreController.redScore;
+    final total =
+        redTotalScore + scoreController.redScore - penaltyController.redPenalty;
+    return total < 0 ? 0 : total;
   }
 
   // ============================================================
@@ -69,9 +71,11 @@ class MatchController extends ChangeNotifier {
   // ============================================================
 
   int get finalBlueScore {
-    return blueTotalScore + scoreController.blueScore;
+    final total = blueTotalScore +
+        scoreController.blueScore -
+        penaltyController.bluePenalty;
+    return total < 0 ? 0 : total;
   }
-
   // ============================================================
   // WINNER
   // ============================================================
